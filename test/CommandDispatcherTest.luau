@@ -63,8 +63,8 @@ CommandDispatcherTest:test("testCreateAndExecuteOffsetCommand", function()
 end)
 
 CommandDispatcherTest:test("testCreateAndMergeCommands", function()
-	subject:register(literal("base"):then_(literal("foo"):executes(command)))
-	subject:register(literal("base"):then_(literal("bar"):executes(command)))
+	subject:register(literal("base"):with(literal("foo"):executes(command)))
+	subject:register(literal("base"):with(literal("bar"):executes(command)))
 
 	assertThat(subject:execute("base foo", source), is(42))
 	assertThat(subject:execute("base bar", source), is(42))
@@ -115,7 +115,7 @@ CommandDispatcherTest:test("testExecuteUnknownSubcommand", function()
 end)
 
 CommandDispatcherTest:test("testExecuteIncorrectLiteral", function()
-	subject:register(literal("foo"):executes(command):then_(literal("bar")))
+	subject:register(literal("foo"):executes(command):with(literal("bar")))
 
 	local ex = JUnit.assertThrows(CommandSyntaxException, function()
 		subject:execute("foo baz", source)
@@ -125,7 +125,7 @@ CommandDispatcherTest:test("testExecuteIncorrectLiteral", function()
 end)
 
 CommandDispatcherTest:test("testExecuteAmbiguousIncorrectArgument", function()
-	subject:register(literal("foo"):executes(command):then_(literal("bar")):then_(literal("baz")))
+	subject:register(literal("foo"):executes(command):with(literal("bar")):with(literal("baz")))
 
 	local ex = JUnit.assertThrows(CommandSyntaxException, function()
 		subject:execute("foo unknown", source)
@@ -139,11 +139,7 @@ CommandDispatcherTest:test("testExecuteSubcommand", function()
 	Mockito.when(subCommand, any()):thenReturn(100)
 
 	subject:register(
-		literal("foo")
-			:then_(literal("a"))
-			:then_(literal("="):executes(subCommand))
-			:then_(literal("c"))
-			:executes(command)
+		literal("foo"):with(literal("a")):with(literal("="):executes(subCommand)):with(literal("c")):executes(command)
 	)
 
 	assertThat(subject:execute("foo =", source), is(100))
@@ -151,7 +147,7 @@ CommandDispatcherTest:test("testExecuteSubcommand", function()
 end)
 
 CommandDispatcherTest:test("testParseIncompleteLiteral", function()
-	subject:register(literal("foo"):then_(literal("bar"):executes(command)))
+	subject:register(literal("foo"):with(literal("bar"):executes(command)))
 
 	local parse = subject:parse("foo ", source)
 	assertThat(parse:getReader():getRemaining(), equalTo(" "))
@@ -159,7 +155,7 @@ CommandDispatcherTest:test("testParseIncompleteLiteral", function()
 end)
 
 CommandDispatcherTest:test("testParseIncompleteArgument", function()
-	subject:register(literal("foo"):then_(argument("bar", integer()):executes(command)))
+	subject:register(literal("foo"):with(argument("bar", integer()):executes(command)))
 
 	local parse = subject:parse("foo ", source)
 	assertThat(parse:getReader():getRemaining(), equalTo(" "))
@@ -172,8 +168,8 @@ CommandDispatcherTest:test("testExecuteAmbiguiousParentSubcommand", function()
 
 	subject:register(
 		literal("test")
-			:then_(argument("incorrect", integer()):executes(command))
-			:then_(argument("right", integer()):then_(argument("sub", integer()):executes(subCommand)))
+			:with(argument("incorrect", integer()):executes(command))
+			:with(argument("right", integer()):with(argument("sub", integer()):executes(subCommand)))
 	)
 
 	assertThat(subject:execute("test 1 2", source), is(100))
@@ -187,8 +183,8 @@ CommandDispatcherTest:test("testExecuteAmbiguiousParentSubcommandViaRedirect", f
 
 	local real = subject:register(
 		literal("test")
-			:then_(argument("incorrect", integer()):executes(command))
-			:then_(argument("right", integer()):then_(argument("sub", integer()):executes(subCommand)))
+			:with(argument("incorrect", integer()):executes(command))
+			:with(argument("right", integer()):with(argument("sub", integer()):executes(subCommand)))
 	)
 
 	subject:register(literal("redirect"):redirect(real))
@@ -241,7 +237,7 @@ CommandDispatcherTest:test("testCorrectExecuteContextAfterRedirect", function()
 	local addArg = argument("value", integer())
 	local run = literal("run")
 
-	subject:register(add:then_(addArg:redirect(root, function(c: Types.CommandContext<any>): number
+	subject:register(add:with(addArg:redirect(root, function(c: Types.CommandContext<any>): number
 		return c:getSource() + getInteger(c, "value")
 	end)))
 	subject:register(blank:redirect(root))
@@ -268,7 +264,7 @@ CommandDispatcherTest:test("testSharedRedirectAndExecuteNodes", function()
 	local add = literal("add")
 	local addArg = argument("value", integer())
 
-	subject:register(add:then_(addArg
+	subject:register(add:with(addArg
 		:redirect(root, function(c: Types.CommandContext<any>): number
 			return c:getSource() + getInteger(c, "value")
 		end)
@@ -315,10 +311,10 @@ end)
 
 CommandDispatcherTest:test("testIncompleteRedirectShouldThrow", function()
 	local foo = subject:register(literal("foo")
-		:then_(literal("bar"):then_(argument("value", integer()):executes(function(context)
+		:with(literal("bar"):with(argument("value", integer()):executes(function(context)
 			return IntegerArgumentType.getInteger(context, "value")
 		end)))
-		:then_(literal("awa"):executes(function(_context)
+		:with(literal("awa"):executes(function(_context)
 			return 2
 		end)))
 	subject:register(literal("baz"):redirect(foo))
@@ -330,10 +326,10 @@ end)
 
 CommandDispatcherTest:test("testRedirectModifierEmptyResult", function()
 	local foo = subject:register(literal("foo")
-		:then_(literal("bar"):then_(argument("value", integer()):executes(function(context)
+		:with(literal("bar"):with(argument("value", integer()):executes(function(context)
 			return IntegerArgumentType.getInteger(context, "value")
 		end)))
-		:then_(literal("awa"):executes(function(_context)
+		:with(literal("awa"):executes(function(_context)
 			return 2
 		end)))
 	local emptyModifier: Types.RedirectModifier<any> = function(_context)
@@ -345,7 +341,7 @@ CommandDispatcherTest:test("testRedirectModifierEmptyResult", function()
 end)
 
 CommandDispatcherTest:test("testExecuteOrphanedSubcommand", function()
-	subject:register(literal("foo"):then_(argument("bar", integer())):executes(command))
+	subject:register(literal("foo"):with(argument("bar", integer())):executes(command))
 
 	local ex = JUnit.assertThrows(CommandSyntaxException, function()
 		subject:execute("foo 5", source)
@@ -365,7 +361,7 @@ CommandDispatcherTest:test("testExecute_invalidOther", function()
 end)
 
 CommandDispatcherTest:test("parse_noSpaceSeparator", function()
-	subject:register(literal("foo"):then_(argument("bar", integer()):executes(command)))
+	subject:register(literal("foo"):with(argument("bar", integer()):executes(command)))
 
 	local ex = JUnit.assertThrows(CommandSyntaxException, function()
 		subject:execute("foo$", source)
@@ -375,7 +371,7 @@ CommandDispatcherTest:test("parse_noSpaceSeparator", function()
 end)
 
 CommandDispatcherTest:test("testExecuteInvalidSubcommand", function()
-	subject:register(literal("foo"):then_(argument("bar", integer())):executes(command))
+	subject:register(literal("foo"):with(argument("bar", integer())):executes(command))
 
 	local ex = JUnit.assertThrows(CommandSyntaxException, function()
 		subject:execute("foo bar", source)
@@ -386,14 +382,14 @@ end)
 
 CommandDispatcherTest:test("testGetPath", function()
 	local bar = literal("bar"):build()
-	subject:register(literal("foo"):then_(bar))
+	subject:register(literal("foo"):with(bar))
 
 	assertThat(subject:getPath(bar), equalTo({ "foo", "bar" }))
 end)
 
 CommandDispatcherTest:test("testFindNodeExists", function()
 	local bar = literal("bar"):build()
-	subject:register(literal("foo"):then_(bar))
+	subject:register(literal("foo"):with(bar))
 
 	assertThat(subject:findNode({ "foo", "bar" }), is(bar))
 end)

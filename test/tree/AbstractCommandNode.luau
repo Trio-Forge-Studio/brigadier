@@ -30,9 +30,9 @@ return function(suite: JUnit.Suite, getCommandNode: () -> Types.CommandNode<any>
 	suite:test("testAddChildMergesGrandchildren", function()
 		local node = getCommandNode()
 
-		node:addChild(literal("child"):then_(literal("grandchild1")):build())
+		node:addChild(literal("child"):with(literal("grandchild1")):build())
 
-		node:addChild(literal("child"):then_(literal("grandchild2")):build())
+		node:addChild(literal("child"):with(literal("grandchild2")):build())
 
 		assertThat(node:getChildren(), hasSize(1))
 		assertThat(node:getChildren()[1]:getChildren(), hasSize(2))

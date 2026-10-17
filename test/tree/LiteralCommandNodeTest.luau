@@ -87,7 +87,7 @@ LiteralCommandNodeTest:test("testEquals", function()
 		:addEqualityGroup(literal("foo"):build(), literal("foo"):build())
 		:addEqualityGroup(literal("bar"):executes(command):build(), literal("bar"):executes(command):build())
 		:addEqualityGroup(literal("bar"):build(), literal("bar"):build())
-		:addEqualityGroup(literal("foo"):then_(literal("bar")):build(), literal("foo"):then_(literal("bar")):build())
+		:addEqualityGroup(literal("foo"):with(literal("bar")):build(), literal("foo"):with(literal("bar")):build())
 		:testEquals()
 end)
 

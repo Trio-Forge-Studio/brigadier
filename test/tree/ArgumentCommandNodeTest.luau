@@ -58,8 +58,8 @@ ArgumentCommandNodeTest:test("testEquals", function()
 		:addEqualityGroup(argument("bar", integer(-100, 100)):build(), argument("bar", integer(-100, 100)):build())
 		:addEqualityGroup(argument("foo", integer(-100, 100)):build(), argument("foo", integer(-100, 100)):build())
 		:addEqualityGroup(
-			argument("foo", integer()):then_(argument("bar", integer())):build(),
-			argument("foo", integer()):then_(argument("bar", integer())):build()
+			argument("foo", integer()):with(argument("bar", integer())):build(),
+			argument("foo", integer()):with(argument("bar", integer())):build()
 		)
 		:testEquals()
 end)

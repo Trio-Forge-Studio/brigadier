@@ -390,7 +390,7 @@ export type ArgumentCommandNode<S, T> = {
 -- Any builder. Java's ArgumentBuilder<S, T extends ArgumentBuilder<S, T>> returns the concrete
 -- builder from every chained call, which the concrete types below do.
 export type ArgumentBuilder<S> = {
-	read then_: (self: any, argument: ArgumentBuilder<S> | CommandNode<S>) -> any,
+	read with: (self: any, argument: ArgumentBuilder<S> | CommandNode<S>) -> any,
 	read getArguments: (self: any) -> { CommandNode<S> },
 	read executes: (self: any, command: Command<S>?) -> any,
 	read getCommand: (self: any) -> Command<S>?,
@@ -406,7 +406,7 @@ export type ArgumentBuilder<S> = {
 }
 
 export type LiteralArgumentBuilder<S> = {
-	read then_: (self: any, argument: ArgumentBuilder<S> | CommandNode<S>) -> LiteralArgumentBuilder<S>,
+	read with: (self: any, argument: ArgumentBuilder<S> | CommandNode<S>) -> LiteralArgumentBuilder<S>,
 	read getArguments: (self: any) -> { CommandNode<S> },
 	read executes: (self: any, command: Command<S>?) -> LiteralArgumentBuilder<S>,
 	read getCommand: (self: any) -> Command<S>?,
@@ -432,7 +432,7 @@ export type LiteralArgumentBuilder<S> = {
 }
 
 export type RequiredArgumentBuilder<S, T> = {
-	read then_: (self: any, argument: ArgumentBuilder<S> | CommandNode<S>) -> RequiredArgumentBuilder<S, T>,
+	read with: (self: any, argument: ArgumentBuilder<S> | CommandNode<S>) -> RequiredArgumentBuilder<S, T>,
 	read getArguments: (self: any) -> { CommandNode<S> },
 	read executes: (self: any, command: Command<S>?) -> RequiredArgumentBuilder<S, T>,
 	read getCommand: (self: any) -> Command<S>?,

@@ -630,7 +630,7 @@ function ArgumentBuilder.isInstance(value: unknown): boolean
 	return Class.isInstance(value, ArgumentBuilder)
 end
 
-function ArgumentBuilder.then_(self: Builder, argument: Types.ArgumentBuilder<S> | Types.CommandNode<S>): any
+function ArgumentBuilder.with(self: Builder, argument: Types.ArgumentBuilder<S> | Types.CommandNode<S>): any
 	if self._target ~= nil then
 		error(RuntimeException.IllegalStateException.new("Cannot add children to a redirected node"))
 	end

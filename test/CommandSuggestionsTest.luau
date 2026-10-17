@@ -117,7 +117,7 @@ CommandSuggestionsTest:test("getCompletionSuggestions_rootCommands_partial_withI
 end)
 
 CommandSuggestionsTest:test("getCompletionSuggestions_subCommands", function()
-	subject:register(literal("parent"):then_(literal("foo")):then_(literal("bar")):then_(literal("baz")))
+	subject:register(literal("parent"):with(literal("foo")):with(literal("bar")):with(literal("baz")))
 
 	local result = subject:getCompletionSuggestions(subject:parse("parent ", source)):join()
 
@@ -133,7 +133,7 @@ CommandSuggestionsTest:test("getCompletionSuggestions_subCommands", function()
 end)
 
 CommandSuggestionsTest:test("getCompletionSuggestions_movingCursor_subCommands", function()
-	subject:register(literal("parent_one"):then_(literal("faz")):then_(literal("fbz")):then_(literal("gaz")))
+	subject:register(literal("parent_one"):with(literal("faz")):with(literal("fbz")):with(literal("gaz")))
 
 	subject:register(literal("parent_two"))
 
@@ -150,7 +150,7 @@ CommandSuggestionsTest:test("getCompletionSuggestions_movingCursor_subCommands",
 end)
 
 CommandSuggestionsTest:test("getCompletionSuggestions_subCommands_partial", function()
-	subject:register(literal("parent"):then_(literal("foo")):then_(literal("bar")):then_(literal("baz")))
+	subject:register(literal("parent"):with(literal("foo")):with(literal("bar")):with(literal("baz")))
 
 	local parse = subject:parse("parent b", source)
 	local result = subject:getCompletionSuggestions(parse):join()
@@ -166,7 +166,7 @@ CommandSuggestionsTest:test("getCompletionSuggestions_subCommands_partial", func
 end)
 
 CommandSuggestionsTest:test("getCompletionSuggestions_subCommands_partial_withInputOffset", function()
-	subject:register(literal("parent"):then_(literal("foo")):then_(literal("bar")):then_(literal("baz")))
+	subject:register(literal("parent"):with(literal("foo")):with(literal("bar")):with(literal("baz")))
 
 	local parse = subject:parse(inputWithOffset("junk parent b", 5), source)
 	local result = subject:getCompletionSuggestions(parse):join()
@@ -182,7 +182,7 @@ CommandSuggestionsTest:test("getCompletionSuggestions_subCommands_partial_withIn
 end)
 
 CommandSuggestionsTest:test("getCompletionSuggestions_redirect", function()
-	local actual = subject:register(literal("actual"):then_(literal("sub")))
+	local actual = subject:register(literal("actual"):with(literal("sub")))
 	subject:register(literal("redirect"):redirect(actual))
 
 	local parse = subject:parse("redirect ", source)
@@ -193,7 +193,7 @@ CommandSuggestionsTest:test("getCompletionSuggestions_redirect", function()
 end)
 
 CommandSuggestionsTest:test("getCompletionSuggestions_redirectPartial", function()
-	local actual = subject:register(literal("actual"):then_(literal("sub")))
+	local actual = subject:register(literal("actual"):with(literal("sub")))
 	subject:register(literal("redirect"):redirect(actual))
 
 	local parse = subject:parse("redirect s", source)
@@ -205,7 +205,7 @@ end)
 
 CommandSuggestionsTest:test("getCompletionSuggestions_movingCursor_redirect", function()
 	local actualOne =
-		subject:register(literal("actual_one"):then_(literal("faz")):then_(literal("fbz")):then_(literal("gaz")))
+		subject:register(literal("actual_one"):with(literal("faz")):with(literal("fbz")):with(literal("gaz")))
 
 	local _actualTwo = subject:register(literal("actual_two"))
 
@@ -232,7 +232,7 @@ CommandSuggestionsTest:test("getCompletionSuggestions_movingCursor_redirect", fu
 end)
 
 CommandSuggestionsTest:test("getCompletionSuggestions_redirectPartial_withInputOffset", function()
-	local actual = subject:register(literal("actual"):then_(literal("sub")))
+	local actual = subject:register(literal("actual"):with(literal("sub")))
 	subject:register(literal("redirect"):redirect(actual))
 
 	local parse = subject:parse(inputWithOffset("/redirect s", 1), source)
@@ -244,7 +244,7 @@ end)
 
 CommandSuggestionsTest:test("getCompletionSuggestions_redirect_lots", function()
 	local loop = subject:register(literal("redirect"))
-	subject:register(literal("redirect"):then_(literal("loop"):then_(argument("loop", integer()):redirect(loop))))
+	subject:register(literal("redirect"):with(literal("loop"):with(argument("loop", integer()):redirect(loop))))
 
 	local result = subject:getCompletionSuggestions(subject:parse("redirect loop 1 loop 02 loop 003 ", source)):join()
 
@@ -254,8 +254,8 @@ end)
 
 CommandSuggestionsTest:test("getCompletionSuggestions_redirect_contextualArgument", function()
 	local actual = subject:register(
-		literal("actual"):then_(
-			argument("arg_one", word()):then_(
+		literal("actual"):with(
+			argument("arg_one", word()):with(
 				argument("arg_two", word()):suggests(
 					function(context: Types.CommandContext<any>, builder: Types.SuggestionsBuilder)
 						local argOne = StringArgumentType.getString(context, "arg_one")
@@ -278,9 +278,9 @@ CommandSuggestionsTest:test("getCompletionSuggestions_execute_simulation", funct
 	local execute = subject:register(literal("execute"))
 	subject:register(
 		literal("execute")
-			:then_(literal("as"):then_(argument("name", word()):redirect(execute)))
-			:then_(literal("store"):then_(argument("name", word()):redirect(execute)))
-			:then_(literal("run"):executes(function(_c)
+			:with(literal("as"):with(argument("name", word()):redirect(execute)))
+			:with(literal("store"):with(argument("name", word()):redirect(execute)))
+			:with(literal("run"):executes(function(_c)
 				return 0
 			end))
 	)
@@ -295,9 +295,9 @@ CommandSuggestionsTest:test("getCompletionSuggestions_execute_simulation_partial
 	local execute = subject:register(literal("execute"))
 	subject:register(
 		literal("execute")
-			:then_(literal("as"):then_(literal("bar"):redirect(execute)):then_(literal("baz"):redirect(execute)))
-			:then_(literal("store"):then_(argument("name", word()):redirect(execute)))
-			:then_(literal("run"):executes(function(_c)
+			:with(literal("as"):with(literal("bar"):redirect(execute)):with(literal("baz"):redirect(execute)))
+			:with(literal("store"):with(argument("name", word()):redirect(execute)))
+			:with(literal("run"):executes(function(_c)
 				return 0
 			end))
 	)

@@ -36,8 +36,8 @@ RequiredArgumentBuilderTest:test("testBuildWithExecutor", function()
 end)
 
 RequiredArgumentBuilderTest:test("testBuildWithChildren", function()
-	builder:then_(argument("bar", integer()))
-	builder:then_(argument("baz", integer()))
+	builder:with(argument("bar", integer()))
+	builder:with(argument("baz", integer()))
 	local node = builder:build()
 
 	assertThat(node:getChildren(), hasSize(2))

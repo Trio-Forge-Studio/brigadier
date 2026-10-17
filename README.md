@@ -21,7 +21,7 @@ type Source = { player: Player }
 local dispatcher: Brigadier.CommandDispatcher<Source> = Brigadier.CommandDispatcher.new()
 
 dispatcher:register(
-	literal("give"):then_(argument("player", word()):then_(argument("amount", integer(1, 100)):executes(function(context)
+	literal("give"):with(argument("player", word()):with(argument("amount", integer(1, 100)):executes(function(context)
 		local player = Brigadier.StringArgumentType.getString(context, "player")
 		local amount = Brigadier.IntegerArgumentType.getInteger(context, "amount")
 		print(`{context:getSource().player.Name} gives {amount} to {player}`)
@@ -40,7 +40,7 @@ end
 
 The API is Brigadier's, in camelCase, with these Luau adjustments:
 
-- `then` is a Luau keyword, so it's `then_`.
+- `then` is a Luau keyword, so adding a child is `with`: `literal("give"):with(argument(...))`.
 - Constructors are `Class.new(...)`, and `instanceof` is `Class.isInstance(value)`.
 - Exceptions are raised with `error` and caught with `pcall`.
 - Suggestions use a small port of `CompletableFuture`; `join()` waits by yielding the coroutine.

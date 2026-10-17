@@ -17,7 +17,7 @@ The shapes of all classes are declared once in `src/Types.luau`, since the class
 
 - Classes keep their Java names. Methods and fields keep their Java names, in camelCase: `reader:getRemainingLength()`, `dispatcher:getCompletionSuggestions(parse, cursor)`.
 - Constructors are `Class.new(...)`. Static methods and constants are fields of the class: `StringRange.at(0)`, `Command.SINGLE_SUCCESS`, `CommandDispatcher.ARGUMENT_SEPARATOR`.
-- `then` is a Luau keyword, so `ArgumentBuilder.then` is `ArgumentBuilder:then_`.
+- `then` is a Luau keyword, so `ArgumentBuilder.then` is `ArgumentBuilder:with`.
 - `Class.isInstance(value)` replaces `value instanceof Class` and works through inheritance.
 - Enums are tables of strings: `ContextChain.Stage.EXECUTE`, `StringArgumentType.StringType.GREEDY_PHRASE`.
 
@@ -32,7 +32,7 @@ Overloads become one function that dispatches on its arguments:
 | `execute(String, S)`, `execute(StringReader, S)`, `execute(ParseResults)` | `execute(input, source?)` |
 | `parse(String, S)`, `parse(StringReader, S)` | `parse(command, source)` |
 | `getCompletionSuggestions(parse)`, `(parse, cursor)` | `getCompletionSuggestions(parse, cursor?)` |
-| `then(ArgumentBuilder)`, `then(CommandNode)` | `then_(builderOrNode)` |
+| `then(ArgumentBuilder)`, `then(CommandNode)` | `with(builderOrNode)` |
 | `redirect(target)`, `redirect(target, SingleRedirectModifier)` | `redirect(target, modifier?)` |
 | `StringRange.get(ImmutableStringReader)`, `get(String)` | `get(readerOrString)` |
 | `new SuggestionsBuilder(input, inputLowerCase, start)`, `(input, start)` | `SuggestionsBuilder.new(input, inputLowerCaseOrStart, start?)` |

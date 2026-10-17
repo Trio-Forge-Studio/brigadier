@@ -30,7 +30,7 @@ TypedSourceTest:before(function()
 		:requires(function(source: Source): boolean
 			return source.admin
 		end)
-		:then_(argument("player", word()):then_(argument("amount", integer(1, 100)):executes(function(context)
+		:with(argument("player", word()):with(argument("amount", integer(1, 100)):executes(function(context)
 			local source: Source = context:getSource()
 			local player = Brigadier.StringArgumentType.getString(context, "player")
 			local amount = Brigadier.IntegerArgumentType.getInteger(context, "amount")
