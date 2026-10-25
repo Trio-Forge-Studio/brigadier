@@ -3,7 +3,7 @@
 // contains "nocheck" is skipped. A block with group=<name> in its info string runs after the earlier blocks of that
 // group in the same file, so a tutorial's steps can build on each other.
 //
-//   node scripts/check-snippets.mjs README.md ../website/src/content/docs/brigadier/*.mdx ../website/src/content/docs/brigadier/*/*.mdx
+//   node scripts/check-snippets.mjs README.md ../../apps/docs/src/content/docs/brigadier/*.mdx ../../apps/docs/src/content/docs/brigadier/*/*.mdx
 
 import { execFileSync, spawnSync } from "node:child_process";
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";

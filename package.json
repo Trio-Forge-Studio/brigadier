@@ -4,16 +4,16 @@
 	"description": "A faithful roblox-ts port of Mojang's Brigadier command parser and dispatcher",
 	"keywords": ["roblox", "roblox-ts", "brigadier", "commands", "parser"],
 	"homepage": "https://website.trio-forge.workers.dev/brigadier/",
-	"bugs": "https://github.com/Trio-Forge-Studio/brigadier/issues",
+	"bugs": "https://github.com/Trio-Forge-Studio/packages/issues",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/Trio-Forge-Studio/brigadier.git"
+		"url": "git+https://github.com/Trio-Forge-Studio/packages.git",
+		"directory": "packages/brigadier"
 	},
 	"license": "MIT",
 	"main": "out/init.luau",
 	"types": "out/index.d.ts",
 	"files": ["out", "!**/*.tsbuildinfo", "README.md", "LICENSE"],
-	"packageManager": "pnpm@12.15.0",
 	"publishConfig": {
 		"access": "public"
 	},
