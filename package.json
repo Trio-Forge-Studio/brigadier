@@ -31,12 +31,14 @@
 	"scripts": {
 		"build": "rbxtsc --type package",
 		"test": "rbxtsc --type package && lune run test",
-		"check": "stylua --check test .lune && rbxtsc --type package && lune run test && node scripts/check-snippets.mjs README.md",
-		"prepack": "rbxtsc --type package"
+		"check": "stylua --check test .lune && rbxtsc --type package && lune run test && pnpm run examples README.md",
+		"prepack": "rbxtsc --type package",
+		"examples": "check-examples --run --types .lune/example.d.ts"
 	},
 	"devDependencies": {
 		"@rbxts/compiler-types": "catalog:rbxts",
 		"@rbxts/types": "catalog:rbxts",
+		"@trioforge/tooling": "workspace:*",
 		"roblox-ts": "catalog:rbxts",
 		"typescript": "catalog:rbxts"
 	}

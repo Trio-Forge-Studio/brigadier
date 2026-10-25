@@ -67,7 +67,7 @@ pnpm run check   # oxfmt, rbxtsc, StyLua, the tests and the README example
 pnpm run test    # build, then run the tests
 ```
 
-The tests in `test/` are Brigadier's JUnit tests, ported to Luau one to one. `test/lib/runtime.luau` loads the compiled package from `out/` through roblox-ts's runtime, as a place does, and Lune runs them. [AGENTS.md](AGENTS.md) has the rules for changing the port.
+The tests in `test/` are Brigadier's JUnit tests, ported to Luau one to one. The shared `tooling/lune/runtime.luau` loads the compiled package from `out/` through roblox-ts's runtime, as a place does, and Lune runs them. [AGENTS.md](AGENTS.md) has the rules for changing the port.
 
 ## License
 

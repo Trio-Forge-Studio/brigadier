@@ -12,10 +12,10 @@ pnpm run check
 
 It runs rbxtsc, StyLua over the Luau tests, the tests against the compiled package, and the README example. Fix the cause of a failure rather than silencing it.
 
-`node scripts/check-snippets.mjs <files>` compiles the TypeScript examples in Markdown and MDX files with rbxtsc and runs them in Lune. A `// → text` comment is the next line an example prints, and blocks that share `group=<name>` in their info string build on each other. Run it on the Brigadier docs in `apps/docs` after changing an example or an API:
+`pnpm run examples <files>` compiles the TypeScript examples in Markdown and MDX files and runs them in Lune, as the root `AGENTS.md` describes. They run as the player that `.lune/example.luau` provides and `.lune/example.d.ts` declares. Run it on the Brigadier docs in `apps/docs` after changing an example or an API:
 
 ```sh
-node scripts/check-snippets.mjs README.md ../../apps/docs/src/content/docs/brigadier/*.mdx ../../apps/docs/src/content/docs/brigadier/*/*.mdx
+pnpm run examples README.md ../../apps/docs/src/content/docs/brigadier/*.mdx ../../apps/docs/src/content/docs/brigadier/*/*.mdx
 ```
 
 ## Porting

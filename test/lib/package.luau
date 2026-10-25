@@ -1,1 +1,1 @@
-return require("./runtime")("out", {})
+return require("@tooling/runtime")("out")()
