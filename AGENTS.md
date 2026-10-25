@@ -10,7 +10,7 @@ Run every check before you call a change done:
 pnpm run check
 ```
 
-It runs oxfmt over `src` and `scripts`, rbxtsc, StyLua over the Luau tests, the tests against the compiled package, and the README example. Install the Node tools with `pnpm install`, and Lune and StyLua with `rokit install`. Fix the cause of a failure rather than silencing it.
+It runs rbxtsc, StyLua over the Luau tests, the tests against the compiled package, and the README example. Fix the cause of a failure rather than silencing it.
 
 `node scripts/check-snippets.mjs <files>` compiles the TypeScript examples in Markdown and MDX files with rbxtsc and runs them in Lune. A `// → text` comment is the next line an example prints, and blocks that share `group=<name>` in their info string build on each other. Run it on the Brigadier docs in `apps/docs` after changing an example or an API:
 

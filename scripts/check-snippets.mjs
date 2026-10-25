@@ -9,6 +9,7 @@ import { execFileSync, spawnSync } from "node:child_process";
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { stripVTControlCharacters } from "node:util";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const files = process.argv.slice(2);
@@ -81,9 +82,9 @@ const compiled = spawnSync(process.execPath, [rbxtsc, "--type", "package", "-p",
 	cwd: root,
 	encoding: "utf8",
 });
-const text = (compiled.stdout + compiled.stderr).replace(/\u001b\[[0-9;]*m/g, "");
+const text = stripVTControlCharacters(compiled.stdout + compiled.stderr);
 for (const row of text.split(/\r?\n/).filter(Boolean)) {
-	const match = /(?:^|[\/])([^\/:]+\.ts):(\d+):(\d+) - (.*)$/.exec(row);
+	const match = /(?:^|[/])([^/:]+\.ts):(\d+):(\d+) - (.*)$/.exec(row);
 	const example = match && byName.get(match[1]);
 	if (example) {
 		// The prelude and a group's earlier blocks come first. Errors there are reported for those blocks.
