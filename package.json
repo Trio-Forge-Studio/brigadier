@@ -9,12 +9,11 @@
 		"commands",
 		"parser"
 	],
-	"homepage": "https://website.trio-forge.workers.dev/brigadier/",
-	"bugs": "https://github.com/Trio-Forge-Studio/packages/issues",
+	"homepage": "https://website.trio-forge.workers.dev/docs/brigadier/",
+	"bugs": "https://github.com/Trio-Forge-Studio/brigadier/issues",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/Trio-Forge-Studio/packages.git",
-		"directory": "packages/brigadier"
+		"url": "git+https://github.com/Trio-Forge-Studio/brigadier.git"
 	},
 	"license": "MIT",
 	"main": "out/init.luau",
@@ -32,15 +31,21 @@
 	"scripts": {
 		"build": "rbxtsc --type package",
 		"test": "rbxtsc --type package && lune run test",
-		"check": "stylua --check test .lune && rbxtsc --type package && lune run test && pnpm run examples README.md",
+		"check": "vp check && stylua --check test .lune && rbxtsc --type package && lune run test && pnpm run examples README.md",
 		"prepack": "rbxtsc --type package",
-		"examples": "check-examples --run --types .lune/example.d.ts"
+		"examples": "node tooling/check-examples.mjs --run --types .lune/example.d.ts",
+		"fmt": "vp fmt",
+		"prepare": "vp config",
+		"changeset": "changeset"
 	},
 	"devDependencies": {
-		"@rbxts/compiler-types": "catalog:rbxts",
-		"@rbxts/types": "catalog:rbxts",
-		"@trioforge/tooling": "workspace:*",
-		"roblox-ts": "catalog:rbxts",
-		"typescript": "catalog:rbxts"
-	}
+		"@changesets/changelog-github": "1.0.1",
+		"@changesets/cli": "3.0.3",
+		"@rbxts/compiler-types": "3.0.0-types.0",
+		"@rbxts/types": "1.0.959",
+		"roblox-ts": "3.0.0",
+		"typescript": "5.5.3",
+		"vite-plus": "1.3.0"
+	},
+	"packageManager": "pnpm@12.15.0"
 }

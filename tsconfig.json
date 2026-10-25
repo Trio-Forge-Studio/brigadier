@@ -1,5 +1,5 @@
 {
-	"extends": "../../tsconfig.rbxts.json",
+	"extends": "./tsconfig.rbxts.json",
 	"compilerOptions": {
 		"typeRoots": ["node_modules/@rbxts"],
 		"rootDir": "src",

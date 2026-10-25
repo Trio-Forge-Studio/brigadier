@@ -2,7 +2,7 @@
 
 A roblox-ts port of [Mojang's Brigadier](https://github.com/Mojang/brigadier), the command parser and dispatcher behind Minecraft's commands. It is a class-for-class port of Brigadier 1.3, and it passes all of Brigadier's unit tests.
 
-Read the documentation at <https://website.trio-forge.workers.dev/brigadier/>.
+Read the documentation at <https://website.trio-forge.workers.dev/docs/brigadier/>.
 
 ## Install
 
