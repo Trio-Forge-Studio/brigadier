@@ -1,8 +1,0 @@
-{
-  "languageMode": "strict",
-  "aliases": {
-    "brigadier": "src",
-    "test": "test",
-    "lune": "~/.lune/.typedefs/0.11.0/"
-  }
-}

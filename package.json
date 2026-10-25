@@ -1,0 +1,34 @@
+{
+	"name": "@trioforge/brigadier",
+	"version": "0.1.0",
+	"description": "A faithful roblox-ts port of Mojang's Brigadier command parser and dispatcher",
+	"keywords": ["roblox", "roblox-ts", "brigadier", "commands", "parser"],
+	"homepage": "https://website.trio-forge.workers.dev/brigadier/",
+	"bugs": "https://github.com/Trio-Forge-Studio/brigadier/issues",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Trio-Forge-Studio/brigadier.git"
+	},
+	"license": "MIT",
+	"main": "out/init.luau",
+	"types": "out/index.d.ts",
+	"files": ["out", "!**/*.tsbuildinfo", "README.md", "LICENSE"],
+	"packageManager": "pnpm@12.15.0",
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "rbxtsc --type package",
+		"test": "rbxtsc --type package && lune run test",
+		"fmt": "oxfmt src scripts",
+		"check": "oxfmt --check src scripts && rbxtsc --type package && stylua --check test .lune && lune run test && node scripts/check-snippets.mjs README.md",
+		"prepack": "rbxtsc --type package"
+	},
+	"devDependencies": {
+		"@rbxts/compiler-types": "3.0.0-types.0",
+		"@rbxts/types": "^1.0.958",
+		"oxfmt": "^0.74.0",
+		"roblox-ts": "^3.0.0",
+		"typescript": "5.5.3"
+	}
+}
