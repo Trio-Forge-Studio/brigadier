@@ -30,4 +30,11 @@ node scripts/check-snippets.mjs README.md ../website/src/content/docs/brigadier/
 
 ## Releasing
 
-Bump `version` in `package.json`, then publish with `pnpm publish`. `prepack` builds `out/` first.
+Releases publish from CI. Bump `version` in `package.json` in a PR and merge it. Then tag that commit on `main` and push the tag:
+
+```sh
+git tag v0.2.0 origin/main
+git push origin refs/tags/v0.2.0
+```
+
+`.github/workflows/release.yml` refuses a tag that isn't on `main` or doesn't match the version, runs `pnpm run check`, and publishes with `npm publish` through npm trusted publishing, with provenance. Don't publish from a machine.
