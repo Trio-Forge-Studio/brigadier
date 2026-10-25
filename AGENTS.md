@@ -27,14 +27,3 @@ pnpm run examples README.md ../../apps/docs/src/content/docs/brigadier/*.mdx ../
 
 - Comment only what the code can't say: a non-obvious reason, a workaround, a trap. Comments the Java had in tests stay.
 - Commit messages are Conventional Commits with a scope: `feat(dispatcher): …`, `fix(reader): …`, `test(suggestion): …`, `docs: …`.
-
-## Releasing
-
-Releases publish from CI. Bump `version` in `package.json` in a PR and merge it. Then tag that commit on `main` and push the tag:
-
-```sh
-git tag brigadier-v0.2.0 origin/main
-git push origin refs/tags/brigadier-v0.2.0
-```
-
-The repository's `.github/workflows/release.yml` refuses a tag that isn't on `main` or doesn't match the version, runs `pnpm run check`, and publishes with `npm publish` through npm trusted publishing, with provenance. Don't publish from a machine.
