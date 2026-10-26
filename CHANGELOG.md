@@ -1,5 +1,11 @@
 # @trioforge/brigadier
 
+## 0.1.3
+
+### Patch Changes
+
+- [`81d09f1`](https://github.com/Trio-Forge-Studio/brigadier/commit/81d09f13ca6471153051ff921629c9e55c00c470) Thanks [@Hezaerd](https://github.com/Hezaerd)! - The source moved to its own repository, [Trio-Forge-Studio/brigadier](https://github.com/Trio-Forge-Studio/brigadier), so the package's repository and issue links point there. Its homepage is now its docs page at <https://website.trio-forge.workers.dev/docs/brigadier/>. The code is the same as the previous version.
+
 ## 0.1.2
 
 ### Patch Changes
