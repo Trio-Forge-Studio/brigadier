@@ -1,6 +1,6 @@
 {
 	"name": "@trioforge/brigadier",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "A faithful roblox-ts port of Mojang's Brigadier command parser and dispatcher",
 	"keywords": [
 		"roblox",
