@@ -6,7 +6,7 @@ A line-by-line port of Mojang's Brigadier 1.3, at commit `9ba4f13`, to roblox-ts
 
 Run `pnpm install` and `rokit install`. `rokit.toml` pins Lune and StyLua. Vite+ (`vp`) formats and lints the repository from `vite.config.ts`, and `pnpm run fmt` fixes formatting. A pre-commit hook runs `vp check --fix` on staged files.
 
-`tsconfig.json` extends `tsconfig.rbxts.json`, the roblox-ts options every Trio Forge library shares. `tooling/lune/` has the roblox-ts runtime and the test runner, which Lune code requires as `@tooling/runtime` and `@tooling/test` through `.luaurc`. `tooling/check-examples.mjs` checks the examples. Each Trio Forge library keeps its own copy of `tooling/`, so a fix there belongs in the other libraries too.
+`tsconfig.json` extends `tsconfig.rbxts.json`, the roblox-ts options every Trio Forge library shares. The example checker, staged release command, and Lune runtime and test runner come from `@trioforge/tooling`. Lune code requires the runtime and runner as `@tooling/runtime` and `@tooling/test` through `.luaurc`. CI and release use the shared workflows in [Trio-Forge-Studio/tooling](https://github.com/Trio-Forge-Studio/tooling). Fix shared tooling in that repository.
 
 ## Checks
 
