@@ -1,8 +1,8 @@
 # @trioforge/brigadier
 
-A roblox-ts port of [Mojang's Brigadier](https://github.com/Mojang/brigadier), the command parser and dispatcher behind Minecraft's commands. It is a class-for-class port of Brigadier 1.3, and it passes all of Brigadier's unit tests.
+A roblox-ts port of [Mojang's Brigadier](https://github.com/Mojang/brigadier), the command parser and dispatcher behind Minecraft's commands. It ports Brigadier 1.3 class for class and passes all of Brigadier's unit tests.
 
-Read the documentation at <https://website.trio-forge.workers.dev/docs/brigadier/>.
+The documentation is at <https://website.trio-forge.workers.dev/docs/brigadier/>.
 
 ## Install
 
@@ -10,7 +10,7 @@ Read the documentation at <https://website.trio-forge.workers.dev/docs/brigadier
 pnpm add @trioforge/brigadier
 ```
 
-roblox-ts only looks for packages in the scopes your project lists, so add the `@trioforge` scope in two places.
+roblox-ts only finds packages in the scopes your project lists, so you need to add the `@trioforge` scope in two places.
 
 1. In `tsconfig.json`, add it to `typeRoots`:
 
@@ -52,11 +52,11 @@ dispatcher.execute("give Bob 50", player);
 // → Ann gives 50 to Bob
 ```
 
-A command that fails to parse throws a `CommandSyntaxException`. Its `getMessage()` names the problem and points at the character, such as `Integer must not be more than 100, found 500 at position 9: give Bob <--[HERE]`.
+When a command fails to parse, `execute` throws a `CommandSyntaxException`. Its `getMessage()` says what went wrong and where, such as `Integer must not be more than 100, found 500 at position 9: give Bob <--[HERE]`.
 
 ## Differences from the Java
 
-The names are Brigadier's. [docs/porting.md](docs/porting.md) lists every place the port differs, such as Promises instead of `CompletableFuture` and `stringArg()` instead of `string()`.
+The port keeps Brigadier's names. [docs/porting.md](docs/porting.md) lists every place where the port differs from the Java version, such as Promises instead of `CompletableFuture` and `stringArg()` instead of `string()`.
 
 ## Development
 
@@ -67,7 +67,7 @@ pnpm run check   # oxfmt, rbxtsc, StyLua, the tests and the README example
 pnpm run test    # build, then run the tests
 ```
 
-The tests in `test/` are Brigadier's JUnit tests, ported to Luau one to one. The shared `tooling/lune/runtime.luau` loads the compiled package from `out/` through roblox-ts's runtime, as a place does, and Lune runs them. [AGENTS.md](AGENTS.md) has the rules for changing the port.
+The tests in `test/` are Brigadier's JUnit tests, ported to Luau one to one. Lune runs them against the compiled package in `out/`, which `tooling/lune/runtime.luau` loads through the roblox-ts runtime the same way a Roblox place would. [AGENTS.md](AGENTS.md) has the rules for changing the port.
 
 ## License
 
