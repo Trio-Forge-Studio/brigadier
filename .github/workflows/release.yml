@@ -9,6 +9,7 @@ permissions:
   pull-requests: write
   # npm trusted publishing signs in with the workflow's OIDC token, so no npm token is stored here. The publisher
   # may only stage, so each release waits for a maintainer to approve it with 2FA on npmjs.com.
+  # npm checks the caller filename, so each package must keep release.yml.
   id-token: write
 
 concurrency:
@@ -17,34 +18,4 @@ concurrency:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
-    environment: npm
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup
-
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-          registry-url: https://registry.npmjs.org
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      # npm stage publish needs npm 11.15 or later.
-      - name: Update npm
-        run: npm install --global npm@11
-
-      - name: Open the version PR, or stage what it bumped
-        uses: changesets/action@v2.1.2
-        with:
-          version-script: pnpm changeset version
-          publish-script: node tooling/stage-release.mjs
-          pr-title: "chore(release): version packages"
-          commit-message: "chore(release): version packages"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    uses: Trio-Forge-Studio/tooling/.github/workflows/package-release.yml@main

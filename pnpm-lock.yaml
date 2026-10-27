@@ -181,6 +181,9 @@ importers:
       '@rbxts/types':
         specifier: 1.0.959
         version: 1.0.959
+      '@trioforge/tooling':
+        specifier: 0.1.0
+        version: 0.1.0
       roblox-ts:
         specifier: 3.0.0
         version: 3.0.0
@@ -866,6 +869,10 @@ packages:
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
+
+  '@trioforge/tooling@0.1.0':
+    resolution: {integrity: sha512-I2qTrrITQ7Hzu8Og0NuUwvWSUy9PtX0Uk1yijCs8eTWAvXrfUVPSeTjmPtQuBPh50OoDHYmo5iE5VbfgLva3ng==}
+    hasBin: true
 
   '@tybys/wasm-util@0.10.4':
     resolution: {integrity: sha512-W3c4gRigFS0T/Ma4qIYF3GDAc5AQdHb1yL5znJT1Zv1YaD9Kitx656wBjvr19qbiosmZT8lWDM5BEMynUqX65A==}
@@ -2225,6 +2232,8 @@ snapshots:
   '@testing-library/user-event@14.6.8(@testing-library/dom@10.4.2)':
     dependencies:
       '@testing-library/dom': 10.4.2
+
+  '@trioforge/tooling@0.1.0': {}
 
   '@tybys/wasm-util@0.10.4':
     dependencies:

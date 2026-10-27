@@ -7,3 +7,5 @@ peerDependencyRules:
     - vite
   allowedVersions:
     vite: "*"
+# Trio Forge packages must be installable on the day they are released.
+minimumReleaseAgeExclude: ["@trioforge/*"]
